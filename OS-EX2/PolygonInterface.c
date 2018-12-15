@@ -2,6 +2,7 @@
 #include <string.h>
 #include <math.h>
 #include <unistd.h>    // execvp(), pipe()
+#include <sys/wait.h>   // for wait()
 #include "PolygonInterface.h"
 #include "Workers.h"
 
