@@ -1,0 +1,48 @@
+triangle {5, 5} {5, 0} {0, 5} 
+perimeter = 17.1
+area = 12.5
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+perimeter = 363.9
+area = 7200.0
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+perimeter = 363.9
+area = 7200.0
+triangle {5, 5} {5, 0} {0, 5} 
+perimeter = 17.1
+area = 12.5
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+perimeter = 363.9
+area = 7200.0
+triangle {50, -50} {50, -100} {-20, -120} 
+perimeter = 221.8
+area = 1750.0
+triangle {5, 5} {5, 0} {0, 5} 
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+triangle {50, -50} {50, -100} {-20, -120} 
+triangle {50, -51} {50, -102} {-20, -123} 
+perimeter = 224.5
+area = 1785.0
+triangle {5, 5} {5, 0} {0, 5} 
+triangle {50, -50} {50, -100} {-20, -120} 
+triangle {50, -51} {50, -102} {-20, -123} 
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+triangle {5, 5} {5, 0} {0, 5} 
+perimeter = 17.1
+triangle {50, -50} {50, -100} {-20, -120} 
+perimeter = 221.8
+triangle {50, -51} {50, -102} {-20, -123} 
+perimeter = 224.5
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+area = 7200.0
+triangle {5, 5} {5, 0} {0, 5} 
+perimeter = 17.1
+area = 12.5
+square {60, 60} {-60, 0} {0, -60} {60, 0} 
+perimeter = 363.9
+area = 7200.0
+triangle {50, -50} {50, -100} {-20, -120} 
+perimeter = 221.8
+area = 1750.0
+triangle {50, -51} {50, -102} {-20, -123} 
+perimeter = 224.5
+area = 1785.0
