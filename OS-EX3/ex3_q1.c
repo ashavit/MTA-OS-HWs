@@ -32,7 +32,7 @@ int main(int argc, const char * argv[]) {
         exit(PIPE_CREATION_ERROR);
       }
 
-      fprintf(stderr, "DEBUG: CHILD: created pip in=%d, out=%d\n", pip[0], pip[1]);
+      fprintf(stderr, "DEBUG: CHILD %d: created pip in=%d, out=%d\n", i, pip[0], pip[1]);
 
       // replace stdin pipe
       close(0);
@@ -40,31 +40,31 @@ int main(int argc, const char * argv[]) {
         fprintf(stderr, "CHILD PROC: Expected input pipe to be 0, got %d \n", temp);
         exit(PIPE_CREATION_ERROR);
       } else {
-        fprintf(stderr, "DEBUG: CHILD: dup read %d from %d\n", temp, nextPipes[0]);
+        fprintf(stderr, "DEBUG: CHILD %d: dup read %d from %d\n", i, temp, nextPipes[0]);
       }
 
       // set read pip for next proccess
       close(nextPipes[0]);
       nextPipes[0] = dup(pip[0]);
-      fprintf(stderr, "DEBUG: CHILD: dup next read %d from %d\n", nextPipes[0], pip[0]);
+      fprintf(stderr, "DEBUG: CHILD %d: dup next read %d from %d\n", i, nextPipes[0], pip[0]);
 
       // replace stdout pipe
-      fprintf(stderr, "DEBUG: CHILD: about to close 1\n");
+      fprintf(stderr, "DEBUG: CHILD %d: about to close 1\n", i);
       close(1);
-      fprintf(stderr, "DEBUG: CHILD: closed 1\n");
+      fprintf(stderr, "DEBUG: CHILD %d: closed 1\n", i);
       int writeTo = (i == n-1) ? nextPipes[1] : pip[1];
-      fprintf(stderr, "DEBUG: CHILD: about to dup 1 from %d\n", writeTo);
+      fprintf(stderr, "DEBUG: CHILD %d: about to dup 1 from %d\n", i, writeTo);
       if ((temp = dup(writeTo)) != 1) {
         fprintf(stderr, "CHILD PROC: Expected output pipe to be 1, got %d\n", temp);
         exit(PIPE_CREATION_ERROR);
       } else {
-        fprintf(stderr, "DEBUG: CHILD: dup write %d from %d\n", temp, writeTo);
+        fprintf(stderr, "DEBUG: CHILD %d: dup write %d from %d\n", i, temp, writeTo);
       }
 
       // Close temp pipes
-      fprintf(stderr, "DEBUG: CHILD:close pip in %d\n", pip[0]);
+      fprintf(stderr, "DEBUG: CHILD %d: close pip in %d\n", i, pip[0]);
       close(pip[0]);
-      fprintf(stderr, "DEBUG: CHILD:close pip out %d\n", pip[1]);
+      fprintf(stderr, "DEBUG: CHILD %d: close pip out %d\n", i, pip[1]);
       close(pip[1]);
 
       /// TODO: execve writer
