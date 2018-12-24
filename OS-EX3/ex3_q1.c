@@ -1,23 +1,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>    // execvp(), pipe()
+#include <fcntl.h>
 #include "Commons.h"
 
 pid_t child;
 int nextPipes[2];
 char* writerArgs[3];
+const char* outputFile;
 
 void initializeMainVars();
 void executeWriterProgram(int progNum);
 
 int main(int argc, const char * argv[]) {
 
-  // if (argc != 3) {
-	// 	fprintf(stderr, "Wrong number of Arguments: Missing prefix\n\n");
-	// 	exit(MISSING_ARGS);
-	// }
+  if (argc != 3) {
+		fprintf(stderr, "Wrong number of Arguments: Missing prefix\n\n");
+		exit(MISSING_ARGS);
+	}
 
-  int n = 2;
+  int n = atoi(argv[1]);
+  outputFile = argv[2];
   initializeMainVars();
 
   for (int i = 0; i < n; ++i) {
@@ -66,6 +69,13 @@ int main(int argc, const char * argv[]) {
     }
   }
 
+  // Wait for all child programs to end
+  for (int i = 0; i < n; ++i) {
+    wait(NULL);
+  }
+
+  // Close output file with new line
+  write(nextPipes[1], "\n", 1);
   close(nextPipes[0]);
   close(nextPipes[1]);
 
@@ -78,7 +88,7 @@ void initializeMainVars() {
   writerArgs[2] = NULL;
 
   nextPipes[0] = dup(0);
-  nextPipes[1] = dup(1);
+  nextPipes[1] = open(outputFile, O_WRONLY | O_APPEND | O_CREAT, 0644);
 
   if (nextPipes[0] < 0 || nextPipes[1] < 0) {
     fprintf(stderr, "MAIN: Cannot open pipe\n");
