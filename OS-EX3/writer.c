@@ -5,10 +5,14 @@
 
 int main(int argc, const char * argv[]) {
 
+  printf("DEBUG: WRITER: started on proccess %d\n", getpid());
+
   if (argc != 2) {
 		fprintf(stderr, "Wrong number of Arguments: Missing prefix\n\n");
 		exit(MISSING_ARGS);
 	}
+
+  printf("DEBUG: WRITER: started with prefix %s\n", argv[1]);
 
   int bytes;
   char c;
