@@ -5,14 +5,14 @@
 
 int main(int argc, const char * argv[]) {
 
-  printf("DEBUG: WRITER: started on proccess %d\n", getpid());
+  // fprintf(stderr, "DEBUG: WRITER %d: started on proccess %d\n", getpid(), getpid());
 
   if (argc != 2) {
 		fprintf(stderr, "Wrong number of Arguments: Missing prefix\n\n");
 		exit(MISSING_ARGS);
 	}
 
-  printf("DEBUG: WRITER: started with prefix %s\n", argv[1]);
+  // fprintf(stderr, "DEBUG: WRITER %d: started with prefix %s\n", getpid(), argv[1]);
 
   int bytes;
   char c;
@@ -26,12 +26,9 @@ int main(int argc, const char * argv[]) {
   }
 
   if (bytes == -1) {
-      printf("MAIN: Error reading from pipe");
+      fprintf(stderr, "WRITER: Error reading from pipe");
       exit(PIPE_READ_ERROR);
   }
 
-  // No need for anymore pipes
-  close(0);
-  close(1);
   return 0;
 }
