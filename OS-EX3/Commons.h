@@ -7,6 +7,7 @@
 #define PIPE_READ_ERROR -3
 #define PIPE_WRITE_ERROR -4
 #define MISSING_ARGS -5
+#define LOAD_PROGRAM_ERROR -6
 
 typedef int BOOL;
 #define FALSE 0
