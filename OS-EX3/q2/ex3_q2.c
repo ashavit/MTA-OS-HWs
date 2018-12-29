@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/wait.h>     // for wait()
 #include <unistd.h>       // for sleep()
 #include <time.h>
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 
 	while ((ret = getline(&shoppers[thread_count], &char_count, fp)) != -1) {
 		printf("Shopper: read line: %s", shoppers[thread_count]);
-		if (pthread_create( &threads[thread_count], NULL, do_shopper, (void*) shoppers[thread_count]))
+		if (pthread_create(&threads[thread_count], NULL, do_shopper, (void*) shoppers[thread_count]))
 	  {
 			perror("Failed to create a shopper thread");
 	    exit(EXIT_FAILURE);
@@ -162,17 +162,18 @@ void* do_shopper(void *ptr)
 //=================================================================
 void* do_storage(void *ptr)
 {
-	int val;
-	sem_getvalue(sem_store, &val);
-	if (val <= 0) {
+	// sem_getvalue is deprecated on OSX (See https://discussions.apple.com/thread/1993333)
+	if (sem_trywait(sem_store) < 0)
+	{
 		// Wait to open storage
 		fflush(stdin);
-		printf("(%d) Storage: Press any key to open storage:\n", (int)pthread_self());
+		printf("\n(%d) Storage Room: Press any key to open:\n\n", (int)pthread_self());
 		getchar();
 
-		printf("(%d) Storage starting\n", (int)pthread_self());
+		printf("(%d) Storage Room open\n", (int)pthread_self());
 		sem_post(sem_store);
 	}
+
 	pthread_exit(NULL);
 }
 
