@@ -15,7 +15,7 @@ PROG=$(PROG_NAME)$(EXT)
 All: $(PROG) test
 
 $(PROG): $(PROG_NAME).o
-	$(CC) $(STD) $(PROG_NAME).o -o $(PROG)
+	$(CC) $(STD) $(PROG_NAME).o -o $(PROG) -l pthread
 
 $(PROG_NAME).o: $(PROG_NAME).c
 	$(CC) $(STD) $(CFLAGS) $(PROG_NAME).c

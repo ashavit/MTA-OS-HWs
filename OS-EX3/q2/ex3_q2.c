@@ -52,6 +52,7 @@ void return_to_store(struct try_n_buy try);
 void go_pay(struct try_n_buy try);
 int tenth_sleep(int n);
 void open_all_sem(void);
+void close_all_sem(void);
 
 //===========================================================
 
@@ -87,7 +88,7 @@ int main(int argc, char* argv[])
 		printf("Shopper: read line: %s", shoppers[thread_count]);
 		if (pthread_create( &threads[thread_count], NULL, do_shopper, (void*) shoppers[thread_count]))
 	  {
-			perror("Failed to create a thread");
+			perror("Failed to create a shopper thread");
 	    exit(EXIT_FAILURE);
 	  }
 		thread_count++;
@@ -100,6 +101,7 @@ int main(int argc, char* argv[])
 		pthread_join(threads[i], NULL);
 	}
 	printf ("last customer left... closing the shop.\nbyebye\n");
+	close_all_sem();
 	return 0;
 }
 
@@ -146,10 +148,6 @@ void* do_shopper(void *ptr)
 	exit_fitting(try.name);
 	if (try.buy) go_pay(try);
 
-	// close the semaphores
-	sem_close(sem_fitting);
-	sem_close(sem_store);
-	sem_close(sem_pay);
 
 	pthread_exit(NULL);
 }
@@ -188,7 +186,6 @@ void enter_fitting(char* name)
 	printf("(%d %s) entered fitting room\n", (int)pthread_self(), name);
 }
 
-
 //=================================================================
 void exit_fitting(char* name)
 {
@@ -219,7 +216,6 @@ void get_from_store(struct try_n_buy try)
 	printf("(%d %s) Store: Get completed.\n", (int)pthread_self(), try.name);
 	sem_post(sem_store);
 }
-
 
 //=================================================================
 void return_to_store(struct try_n_buy try)
@@ -282,4 +278,12 @@ void open_all_sem(void)
 		perror("failed to open semaphore /sem_store\n");
 		exit(EXIT_FAILURE);
 	}
+}
+
+void close_all_sem(void)
+{
+	// close the semaphores
+	sem_close(sem_fitting);
+	sem_close(sem_store);
+	sem_close(sem_pay);
 }
