@@ -20,6 +20,7 @@
 #define STORE_RETURN_TIME (1 + (int)pthread_self() % 3)
 #define PAY_TIME 3
 #define DELAY_FACTOR 1 //multiply the delay for all
+#define MAX_SHOPPERS 30
 
 //---------------------------------
 // *** SEMAPHORES
@@ -65,8 +66,8 @@ int main(int argc, char* argv[])
 	int ret;
 	size_t char_count=80; // this is ignored actually
 
-	char* shoppers[100] = { NULL };
-	pthread_t threads[100];
+	char* shoppers[MAX_SHOPPERS] = { NULL };
+	pthread_t threads[MAX_SHOPPERS];
 	int thread_count = 0;
 
 	if (argc != 2) {
