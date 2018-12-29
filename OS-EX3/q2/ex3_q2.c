@@ -42,6 +42,7 @@ struct try_n_buy
 };
 //---------------------------------
 
+void* do_storage(void *ptr);
 void* do_shopper(void *ptr);
 int read_next_try(char* buf, struct try_n_buy* try);
 void enter_fitting(char* name);
@@ -93,6 +94,13 @@ int main(int argc, char* argv[])
 	  }
 		thread_count++;
 	}
+
+	if (pthread_create( &threads[thread_count], NULL, do_storage, NULL))
+  {
+		perror("Failed to create a storage thread");
+    exit(EXIT_FAILURE);
+  }
+	thread_count++;
 
 	// wait for all children
 	for (int i = 0; i < thread_count; ++i)
@@ -148,7 +156,18 @@ void* do_shopper(void *ptr)
 	exit_fitting(try.name);
 	if (try.buy) go_pay(try);
 
+	pthread_exit(NULL);
+}
 
+//=================================================================
+void* do_storage(void *ptr)
+{
+	int val;
+	sem_getvalue(sem_store, &val);
+	if (val <= 0) {
+		printf("(%d) Storage starting\n", (int)pthread_self());
+		sem_post(sem_store);
+	}
 	pthread_exit(NULL);
 }
 
