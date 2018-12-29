@@ -21,9 +21,15 @@ $(PROG_NAME).o: $(PROG_NAME).c
 	$(CC) $(STD) $(CFLAGS) $(PROG_NAME).c
 
 test1: $(PROG) $(WRITER_PROG)
+	./$(PROG) shopper.txt1
+
+test1_color: $(PROG) $(WRITER_PROG)
 	./$(PROG) shopper.txt1 | grep --color fitting
 
 test2: $(PROG) $(WRITER_PROG)
+	./$(PROG) shopper.txt2
+
+test2_color: $(PROG) $(WRITER_PROG)
 	./$(PROG) shopper.txt2 | grep --color fitting
 
 test3: $(PROG) $(WRITER_PROG)
