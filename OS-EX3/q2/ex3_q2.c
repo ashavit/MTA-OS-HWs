@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 
-	puts("Shoe-Store, Tzvi Melamed id 01234567");
+	puts("Shoe-Store, Amir Shavit");
 	setbuf(stdout, NULL);
 
 	fp = fopen(argv[1], "r");
