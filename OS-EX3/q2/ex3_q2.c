@@ -165,6 +165,11 @@ void* do_storage(void *ptr)
 	int val;
 	sem_getvalue(sem_store, &val);
 	if (val <= 0) {
+		// Wait to open storage
+		fflush(stdin);
+		printf("(%d) Storage: Press any key to open storage:\n", (int)pthread_self());
+		getchar();
+
 		printf("(%d) Storage starting\n", (int)pthread_self());
 		sem_post(sem_store);
 	}

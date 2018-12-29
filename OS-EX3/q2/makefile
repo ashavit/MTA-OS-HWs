@@ -33,8 +33,10 @@ test2_color: $(PROG) $(WRITER_PROG)
 	./$(PROG) shopper.txt2 | grep --color fitting
 
 test3: $(PROG) $(WRITER_PROG)
-	./$(PROG) shopper.txt3 | grep --color fitting
+	./$(PROG) shopper.txt3
 
+test3_color: $(PROG) $(WRITER_PROG)
+	./$(PROG) shopper.txt3 | grep --color fitting
 
 test: $(PROG) $(WRITER_PROG)
 	./$(PROG) shopper.txt1 > shopper.log1 2> shopper.err1
