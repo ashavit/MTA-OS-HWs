@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>    // execvp(), pipe()
+#include <sys/wait.h>   // for wait()
 #include <fcntl.h>
 #include "Commons.h"
 
